@@ -1,0 +1,11 @@
+.center{
+    text-align: center;
+    margin: auto;
+}
+
+.button{
+    background-color: blueviolet;
+    color: white;
+    width: 200px;
+    height: 50 px;
+}
