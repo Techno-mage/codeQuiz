@@ -13,7 +13,7 @@ var answers = [];
 for (var i = 0; i < 4; i++){
     answers[i] = document.createElement("div")
     answers[i].classList.add("button");
-    console.log( answers[i]);
+    
 }
 // Quiz questions
 var questions = [
@@ -26,16 +26,44 @@ var questions = [
 
 ];
 
+
+var c = ""
+function cAnswer(a){
+    console.log(a + " " + c);
+    if (a == c){
+        alert("correct");
+    } else {
+        alert("wrong");
+    }
+    nextQuestion();
+
+}
+
 function nextQuestion(){
     console.log("nextQuestion called");
+
+
+
+
     if (questions.length == 0){
         alert("out of questions");
     } else{
         var q = questions.shift();
         prompt.textContent = q.prompt;
+        c = q.correct;
         for(var i = 0; i < 4; i++){
             answers[i].textContent = q.ans[i];
-            answers[i].addEventListener("click", nextQuestion);
+            //answers.onClick = nextQuestion(i, q.correct);
+            
+            
+            /*if (i == q.correct){
+                answers[i].addEventListener("click",  Correct);
+            } else {
+                answers[i].addEventListener("click", Wrong);
+            }*/
+
+
+            
             console.log("After appending event listener");
         }
 
@@ -53,7 +81,13 @@ function initialize(){
     for (var i = 0; i < 4; i++){
         console.log(answers[i]);
         quiz.appendChild(answers[i]);
+        //answers[i].addEventListener("click", function() {cAnswer(i)});
     }
-    nextQuestion();
+    answers[0].addEventListener("click", function() {cAnswer(0)});
+    answers[1].addEventListener("click", function() {cAnswer(1)});
+    answers[2].addEventListener("click", function() {cAnswer(2)});
+    answers[3].addEventListener("click", function() {cAnswer(3)});
+
+    nextQuestion(" ");
 
 }
