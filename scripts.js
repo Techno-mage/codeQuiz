@@ -12,7 +12,7 @@ var prompt = document.createElement("h1");
 var answers = [];
 for (var i = 0; i < 4; i++){
     answers[i] = document.createElement("div")
-    answers[i].class = "button";
+    answers[i].classList.add("button");
     console.log( answers[i]);
 }
 // Quiz questions

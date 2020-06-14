@@ -1,6 +1,7 @@
 .center{
     text-align: center;
     margin: auto;
+    width: 400px;
 }
 
 .button{
@@ -8,4 +9,5 @@
     color: white;
     width: 200px;
     height: 50 px;
+    margin: 10px;
 }
