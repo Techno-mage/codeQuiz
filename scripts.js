@@ -33,6 +33,8 @@ var questions = [
 function finished (){
     quiz.style = "display: none;"
     alert("final score: " + score);
+    retriveScores();
+    document.getElementById('scores').style.display = 'block';
     
 }
 
@@ -114,5 +116,34 @@ function initialize(){
 
     nextQuestion();
     timer();
+
+}
+
+
+//score elements
+
+function testObjects(){
+    var obj = {
+        "scores": [{"name":"bob", "score":5},{"name":"cop", "score":4,},{"name":"ack", "score":3}]
+
+
+    }
+
+    localStorage.setItem("scores", JSON.stringify(obj));
+
+}
+testObjects();
+
+function retriveScores(){
+    var s = JSON.parse(localStorage.getItem("scores"));
+    var scoreList = document.getElementById("scores");
+    scoreList.innerHTML = "";
+
+    for(item of s.scores){
+        var el = document.createElement("div");
+        el.textContent = (item.name + " " + item.score);
+        scoreList.appendChild(el);
+
+    }
 
 }
