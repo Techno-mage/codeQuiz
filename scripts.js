@@ -15,6 +15,10 @@ for (var i = 0; i < 4; i++){
     answers[i].classList.add("button");
     
 }
+var timeRemaining = document.createElement("div");
+var quiz = document.getElementById("quiz");
+
+
 // Quiz questions
 var questions = [
     {prompt:"what is 2+2?", ans:["3", "4", "5", "6"], correct:1},
@@ -26,14 +30,41 @@ var questions = [
 
 ];
 
+function finished (){
+    quiz.style = "display: none;"
+    alert("final score: " + score);
+    
+}
 
-var c = ""
+//Quiz variables
+var score = 0;
+var time = 20;
+
+function timer(){
+    var timerInterval = setInterval( function(){
+        time--;
+        timeRemaining.textContent= ("Seconds Left: " + time);
+        
+
+        if(time <= 0){
+            alert("times up.");
+            finished();
+            clearInterval(timerInterval);
+        }
+    }, 1000)
+
+}
+
+
+var c = ""; //stores the current correct answer
 function cAnswer(a){
     console.log(a + " " + c);
     if (a == c){
         alert("correct");
+        score ++;
     } else {
         alert("wrong");
+        time = time - 2;
     }
     nextQuestion();
 
@@ -41,29 +72,15 @@ function cAnswer(a){
 
 function nextQuestion(){
     console.log("nextQuestion called");
-
-
-
-
     if (questions.length == 0){
         alert("out of questions");
+        finished();
     } else{
         var q = questions.shift();
         prompt.textContent = q.prompt;
         c = q.correct;
         for(var i = 0; i < 4; i++){
             answers[i].textContent = q.ans[i];
-            //answers.onClick = nextQuestion(i, q.correct);
-            
-            
-            /*if (i == q.correct){
-                answers[i].addEventListener("click",  Correct);
-            } else {
-                answers[i].addEventListener("click", Wrong);
-            }*/
-
-
-            
             console.log("After appending event listener");
         }
 
@@ -76,18 +93,20 @@ function nextQuestion(){
 function initialize(){
     var main = document.getElementById("main");
     main.style= "display: none;";
-    var quiz = document.getElementById("quiz");
+    
     quiz.appendChild(prompt);
     for (var i = 0; i < 4; i++){
         console.log(answers[i]);
         quiz.appendChild(answers[i]);
-        //answers[i].addEventListener("click", function() {cAnswer(i)});
     }
     answers[0].addEventListener("click", function() {cAnswer(0)});
     answers[1].addEventListener("click", function() {cAnswer(1)});
     answers[2].addEventListener("click", function() {cAnswer(2)});
     answers[3].addEventListener("click", function() {cAnswer(3)});
+    quiz.appendChild(timeRemaining);
+    timeRemaining.textContent= ("Seconds Left: " + time);
 
-    nextQuestion(" ");
+    nextQuestion();
+    timer();
 
 }
