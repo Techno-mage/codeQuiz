@@ -39,6 +39,7 @@ function finished (){
 //Quiz variables
 var score = 0;
 var time = 20;
+var timeFlag = false;
 
 function timer(){
     var timerInterval = setInterval( function(){
@@ -51,6 +52,10 @@ function timer(){
             finished();
             clearInterval(timerInterval);
         }
+        if (timeFlag){
+            clearInterval(timerInterval);
+        }
+
     }, 1000)
 
 }
@@ -74,6 +79,7 @@ function nextQuestion(){
     console.log("nextQuestion called");
     if (questions.length == 0){
         alert("out of questions");
+        timeFlag = true;    // stops the clock
         finished();
     } else{
         var q = questions.shift();
