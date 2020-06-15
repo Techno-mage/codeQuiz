@@ -8,7 +8,7 @@
 
 //VARIABLES
 //DOM elements
-var prompt = document.createElement("h1");
+var question = document.createElement("h1");
 var answers = [];
 for (var i = 0; i < 4; i++){
     answers[i] = document.createElement("div")
@@ -21,11 +21,11 @@ var quiz = document.getElementById("quiz");
 
 // Quiz questions
 var questions = [
-    {prompt:"what is 2+2?", ans:["3", "4", "5", "6"], correct:1},
-    {prompt:"what is 4+2?", ans:["3", "4", "5", "6"], correct:3},
-    {prompt:"what is 3*2?", ans:["3", "4", "5", "6"], correct:3},
-    {prompt:"what is 8-4?", ans:["3", "4", "5", "6"], correct:1},
-    {prompt:"what is 5*1?", ans:["3", "4", "5", "6"], correct:2}
+    {question:"what is 2+2?", ans:["3", "4", "5", "6"], correct:1},
+    {question:"what is 4+2?", ans:["3", "4", "5", "6"], correct:3},
+    {question:"what is 3*2?", ans:["3", "4", "5", "6"], correct:3},
+    {question:"what is 8-4?", ans:["3", "4", "5", "6"], correct:1},
+    {question:"what is 5*1?", ans:["3", "4", "5", "6"], correct:2}
 
 
 ];
@@ -33,6 +33,11 @@ var questions = [
 function finished (){
     quiz.style = "display: none;"
     alert("final score: " + score);
+    
+    do{
+         var initial = prompt("enter your initials");
+    }while (initial == "");
+    newScore(initial, score);
     retriveScores();
     document.getElementById('scores').style.display = 'block';
     
@@ -42,6 +47,9 @@ function finished (){
 var score = 0;
 var time = 20;
 var timeFlag = false;
+
+//score list variabes
+var scoreList = document.getElementById("scores");
 
 function timer(){
     var timerInterval = setInterval( function(){
@@ -85,7 +93,7 @@ function nextQuestion(){
         finished();
     } else{
         var q = questions.shift();
-        prompt.textContent = q.prompt;
+        question.textContent = q.question;
         c = q.correct;
         for(var i = 0; i < 4; i++){
             answers[i].textContent = q.ans[i];
@@ -102,7 +110,7 @@ function initialize(){
     var main = document.getElementById("main");
     main.style= "display: none;";
     
-    quiz.appendChild(prompt);
+    quiz.appendChild(question);
     for (var i = 0; i < 4; i++){
         console.log(answers[i]);
         quiz.appendChild(answers[i]);
@@ -136,7 +144,7 @@ testObjects();
 
 function retriveScores(){
     var s = JSON.parse(localStorage.getItem("scores"));
-    var scoreList = document.getElementById("scores");
+    
     scoreList.innerHTML = "";
 
     for(item of s.scores){
@@ -145,5 +153,17 @@ function retriveScores(){
         scoreList.appendChild(el);
 
     }
+
+}
+
+function newScore(a, b){
+    var s = JSON.parse(localStorage.getItem("scores"));
+
+    var newEntry = {"name":a, "score": b};
+    s.scores.push(newEntry);
+    console.log(s);
+    var n = {"scores": s.scores};
+    localStorage.setItem("scores", JSON.stringify(n));
+    
 
 }
