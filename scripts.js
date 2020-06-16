@@ -175,6 +175,7 @@ function newScore(a, b){
         s = {"scores":[]};
     }
     s.scores.push(newEntry);
+    s.scores.sort(function(a, b){return b.score - a.score});
     console.log(s);
     var n = {"scores": s.scores};
     localStorage.setItem("scores", JSON.stringify(n));
