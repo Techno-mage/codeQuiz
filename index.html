@@ -7,6 +7,10 @@
     <title>Code Quiz</title>
 </head>
 <body>
+    <nav>
+        <div class= "button" onclick="window.location.reload();">Home</div>
+        <div class= "button" onclick="retriveScores()">Scores</div>
+    </nav>
     <main class= "center" id="main">
         <h1>Coding Quiz</h1>
 
@@ -18,7 +22,14 @@
 
     <div class= "center" id= "quiz"></div>
 
-    <div class= "center" id="scores" style="display: none;"></div>
+    <div class= "center" id="scores" style="display: none;">
+        <h1>High Scores</h1>
+        <ol id ="sList">
+
+        </ol>
+        <div class = "button" onclick= "clearScores()">Clear Scores</div>
+        
+    </div>
 
     <script src="scripts.js"></script>
 </body>

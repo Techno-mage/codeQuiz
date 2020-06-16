@@ -31,15 +31,16 @@ var questions = [
 ];
 
 function finished (){
-    quiz.style = "display: none;"
+    
     alert("final score: " + score);
+    quiz.style.display= "none";
     
     do{
          var initial = prompt("enter your initials");
     }while (initial == "");
     newScore(initial, score);
     retriveScores();
-    document.getElementById('scores').style.display = 'block';
+    
     
 }
 
@@ -49,7 +50,7 @@ var time = 20;
 var timeFlag = false;
 
 //score list variabes
-var scoreList = document.getElementById("scores");
+var scoreList = document.getElementById("sList");
 
 function timer(){
     var timerInterval = setInterval( function(){
@@ -140,15 +141,25 @@ function testObjects(){
     localStorage.setItem("scores", JSON.stringify(obj));
 
 }
-testObjects();
+//testObjects();
 
 function retriveScores(){
-    var s = JSON.parse(localStorage.getItem("scores"));
     
+    document.getElementById("main").style.display = 'none';
+    document.getElementById('scores').style.display = 'block';
+    var s = JSON.parse(localStorage.getItem("scores"));
+
     scoreList.innerHTML = "";
+    console.log ("clicked")
+    if (s == null){
+        return;
+    }
+    console.log("after if statement")
+    
+    
 
     for(item of s.scores){
-        var el = document.createElement("div");
+        var el = document.createElement("li");
         el.textContent = (item.name + " " + item.score);
         scoreList.appendChild(el);
 
@@ -160,10 +171,19 @@ function newScore(a, b){
     var s = JSON.parse(localStorage.getItem("scores"));
 
     var newEntry = {"name":a, "score": b};
+    if (s == null){
+        s = {"scores":[]};
+    }
     s.scores.push(newEntry);
     console.log(s);
     var n = {"scores": s.scores};
     localStorage.setItem("scores", JSON.stringify(n));
     
+
+}
+
+function clearScores(){
+    localStorage.removeItem("scores");
+    retriveScores();
 
 }
