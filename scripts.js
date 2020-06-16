@@ -17,21 +17,22 @@ for (var i = 0; i < 4; i++){
 }
 var timeRemaining = document.createElement("div");
 var quiz = document.getElementById("quiz");
-
+var isCorrect = document.createElement("h2");
 
 // Quiz questions
 var questions = [
-    {question:"what is 2+2?", ans:["3", "4", "5", "6"], correct:1},
-    {question:"what is 4+2?", ans:["3", "4", "5", "6"], correct:3},
-    {question:"what is 3*2?", ans:["3", "4", "5", "6"], correct:3},
-    {question:"what is 8-4?", ans:["3", "4", "5", "6"], correct:1},
-    {question:"what is 5*1?", ans:["3", "4", "5", "6"], correct:2}
+    {question:"Which of these is not a semantic HTML element?", ans:["<section>", "<div>", "<header>", "<main>"], correct:1},
+    {question:"Which of these can you refrence an element by in CSS?", ans:["tag name", "class", "id", "all of the above"], correct:3},
+    {question:"What value will Math.floor(Math.random() * 10) return?", ans:["between 0 and 10", "between 0 and 9", "between 1 and 10", "between 1 and 9"], correct:1},
+    {question:"how do you append a child element to a dom object in javascript?", ans:["el.addChild(newChild)", "el.newChild(newChild)", "el.appendChild(newChild)", "el.append(newChild)"], correct:2},
+    {question:"How do you refrence an element with id='thisId' in CSS?", ans:["thisId {...}", "#thisId {...}", ".thisId{...}", "none of the above"], correct:1}
 
 
 ];
 
 function finished (){
     
+    score = score + Math.floor(time / 5);
     alert("final score: " + score);
     quiz.style.display= "none";
     
@@ -46,7 +47,7 @@ function finished (){
 
 //Quiz variables
 var score = 0;
-var time = 20;
+var time = 30;
 var timeFlag = false;
 
 //score list variabes
@@ -76,10 +77,15 @@ var c = ""; //stores the current correct answer
 function cAnswer(a){
     console.log(a + " " + c);
     if (a == c){
-        alert("correct");
-        score ++;
+        
+        isCorrect.textContent= "correct";
+        isCorrect.style.backgroundColor = "#ccffcc"; 
+        score = score + 5;
     } else {
-        alert("wrong");
+        
+        isCorrect.textContent= "wrong";
+        isCorrect.style.backgroundColor= "#ff6666"
+
         time = time - 2;
     }
     nextQuestion();
@@ -89,7 +95,7 @@ function cAnswer(a){
 function nextQuestion(){
     console.log("nextQuestion called");
     if (questions.length == 0){
-        alert("out of questions");
+        
         timeFlag = true;    // stops the clock
         finished();
     } else{
@@ -110,7 +116,7 @@ function nextQuestion(){
 function initialize(){
     var main = document.getElementById("main");
     main.style= "display: none;";
-    
+    quiz.style.display = "block";
     quiz.appendChild(question);
     for (var i = 0; i < 4; i++){
         console.log(answers[i]);
@@ -122,6 +128,7 @@ function initialize(){
     answers[3].addEventListener("click", function() {cAnswer(3)});
     quiz.appendChild(timeRemaining);
     timeRemaining.textContent= ("Seconds Left: " + time);
+    quiz.appendChild(isCorrect);
 
     nextQuestion();
     timer();
